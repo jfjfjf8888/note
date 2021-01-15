@@ -25,17 +25,29 @@ Google搜索笔记
 属性exported指定是否对外暴露数据，只有为true时，其他应用才可以访问该应用的数据；
 属性name指定ContentProvide实现类的类名；
 ### （3）注册成功后就是实现ContentProvide的抽象方法，其实就是实现对数据的CRUD（create，retrieve，update，delete）操作方法；方法如下：
-```public boolean onCreate()```
+```java
+public boolean onCreate()
+```
 说明：该方法在ContentProvider创建后会被调用，当其他应用程序第一次访问ContentProvide时，该ContentProvider会被创建出来，并立即回调该onCreate方法
-```public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)```
+```java
+public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
+```
 说明：根据Uri查询出select条件所匹配的全部记录，projection表示一个列名列表，表明只选择指定的数据列
-```public String getType(Uri uri)```
+```java
+public String getType(Uri uri)
+```
 说明：返回 当前Uri所代表的数据的MIME类型。如果该Uri对应数据可能包括多条记录，那么MIME类型字符串应该以 vnd.android.cursor.dir/开头；如果该Uri对应的数据只包含一条记录，那么返回MIME类型字符串应该以vnd.android.cursor.item/开头。
-```public Uri insert(Uri uri, ContentValues values)```
+```java
+public Uri insert(Uri uri, ContentValues values)
+```
 说明：根据该Uri插入values对应的数据
-```public int delete(Uri uri, String selection, String[] selectionArgs)```
+```java
+public int delete(Uri uri, String selection, String[] selectionArgs)
+```
 说明：根据Uri，删除selection条件匹配全部记录。
-```public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)```
+```java
+public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)
+```
 说明：根据Uri，更新selection条件匹配的记录。
 # 三 Uri类
          在介绍Android的Uri之前我们先看一个网站的Uri如下：
