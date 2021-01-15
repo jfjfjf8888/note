@@ -209,3 +209,8 @@ while (cursor.moveToNext()){
 }
 ```
 说明： 管理模拟器手机通讯录数据库在data->data->com.android.contact。
+
+***
+(以上内容内部通信使用的是进程间通信--IPC, Android 内，Binder实现了进程间通信)
+# Android跨进程通信：图文详解 Binder机制 原理
+原文url:https://blog.csdn.net/carson_ho/article/details/73560642
