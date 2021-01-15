@@ -148,17 +148,20 @@ public int  match(Uri uri)
 # 六  ContentUris类
 这个类是一个操作 Uri 字符串的工具类，主要是拼接 Uri 字符串用，它有两个方法：
 ```
-public static  Uri withAppendedId(Uri uri, long  id)   用于为路径加上id部分
+public static  Uri withAppendedId(Uri uri, long  id)   
 ```
-例如：Uri  uri = Uri.parse("content://com.lzb.provide.myContentProvide:200/students");
-
+用于为路径加上id部分
+例如：
+```
+Uri  uri = Uri.parse("content://com.lzb.provide.myContentProvide:200/students");
 Uri newUri = ContentUris.withAppendedId(uri,2);
-
+```
 那么 newUri 就变成了content://com.lzb.provide.myContentProvide:200/students/2。
-
-public static long parseId(Uri uri)   用于从指定的Uri中解析出所包含的id
-
-            例如上述newUri解析出来的ID为2。
+```
+public static long parseId(Uri uri)  
+```
+用于从指定的Uri中解析出所包含的id
+例如上述newUri解析出来的ID为2。
 # 七  示例
 ## 1 访问系统短信
 ```java
