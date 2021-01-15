@@ -1,4 +1,4 @@
-# note
+# Note
 Google搜索笔记
 
 # ContentProvider简介
