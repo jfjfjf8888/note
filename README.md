@@ -1,2 +1,5 @@
 # note
 Google搜索笔记
+
+# ContentProvider简介
+ContentProvider是不同应用程序之间进行数据交换的标准API，ContentProvide以Uri的形式对外提供数据，允许其他应用访问和修改数据；其他应用使用ContentResolve根据Uri进行访问操作指定的数据。
