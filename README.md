@@ -2,11 +2,12 @@
 Google搜索笔记
 
 # 一  前言
-       ContentProvider是不同应用程序之间进行数据交换的标准API，ContentProvide以Uri的形式对外提供数据，允许其他应用访问和修改数据；  
-       其他应用使用ContentResolve根据Uri进行访问操作指定的数据。 虽然使用其他方法也可以对外共享数 据，但数据访问方式会因数据存储的方式而不同，  
-       如：采用文件方式对外共享数据，需要进行文件操作读写数据；采用sharedpreferences共享数 据，需要使用sharedpreferences API读写数据。  
-       而使用ContentProvider共享数据的好处是统一了数据访问方式。Android内置的许多数据都是使用ContentProvider形式，供开发者调用的(如视频，音频，图片，通讯录等)。
-       使用ContentProvider我们经常会用到三个类：ContentProvider、Uri、ContentResolver；接下来逐一介绍这三个类。
+ 　　ContentProvider是不同应用程序之间进行数据交换的标准API，ContentProvide以Uri的形式对外提供数据，允许其他应用访问和修改数据；  
+其他应用使用ContentResolve根据Uri进行访问操作指定的数据。 
+　　虽然使用其他方法也可以对外共享数 据，但数据访问方式会因数据存储的方式而不同，  
+如：采用文件方式对外共享数据，需要进行文件操作读写数据；采用sharedpreferences共享数 据，需要使用sharedpreferences API读写数据。  
+ 而使用**ContentProvider共享数据的好处是统一了数据访问方式**。Android内置的许多数据都是使用ContentProvider形式，供开发者调用的(如视频，音频，图片，通讯录等)。
+　　使用ContentProvider我们经常会用到三个类：ContentProvider、Uri、ContentResolver；接下来逐一介绍这三个类。
 # 二   ContentProvider(内容提供者)类
  ## 1 使用方法
 ### （1）定义自己的ContentProvider类，该类需要继续Android提供的ContentProvider基类。
@@ -50,8 +51,8 @@ public int update(Uri uri, ContentValues values, String selection, String[] sele
 ```
 说明：根据Uri，更新selection条件匹配的记录。
 # 三 Uri类
-         在介绍Android的Uri之前我们先看一个网站的Uri如下：
-https://www.oracle.com/index.html
+　　在介绍Android的Uri之前我们先看一个网站的Uri如下：
+　　　<center> https://www.oracle.com/index.html </center> 
 其规则分为三部分如下：
 https：协议部分，通过https协议来访问该网站，这个是固定的；
 www.oracle.com：域名部分，要访问指定网站，这个也是固定的；
