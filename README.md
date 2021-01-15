@@ -15,7 +15,7 @@ Google搜索笔记
 ### （1）定义自己的ContentProvider类，该类需要继续Android提供的ContentProvider基类。
 ### （2）ContentProvider是Android中的四大组件之一，所以需要在AndroidManifest.xml文件中进行注册。注册的时候，与注册Activity类似；
 注册代码如下：
-```
+```java
 <provider
     android:authorities="com.lzb.provide.myContentProvide"
     android:name=".MyContentProvide"
@@ -77,12 +77,9 @@ content://com.lzb.provide.myContentProvide/students/1
 ```
 ## 【知识扩展】
 网站的Uri都有个默认的端口8080，其实我也可以给ContentProvider添加端口，其规则如下：
-    content://com.example.project:200/folder/subfolder/etc
-    \---------/ \---------------------------/ \---/\--------------------------/
-    scheme                 host               port        path
-                    \--------------------------------/
-                              authority   
-
+```java
+content://com.example.project:200/folder/subfolder/etc
+```
 但是要注意在注册ContentProvide、访问ContentProvide时也要添加上该端口号，例如加上端口号200时，访问该ContentProvide的Uri如下：
 ```
 content://com.lzb.provide.myContentProvide:200/students
@@ -90,22 +87,22 @@ content://com.lzb.provide.myContentProvide:200/students
 
 # 四  ContentResolver类
 通过调用Content的 getContentResolver() 方法获取 ContentResolver对象实例，其实ContentResolver的作用类似于HttpClient，获取对象后就可以根据Uri对应用的数据进行CRUD操作了。ContentResolver有如下方法：
-```
+```java
 public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
 ```
 说明：根据Uri查询出select条件所匹配的全部记录，projection表示一个列名列表，表明只选择指定的数据列
 
-```
+```java
 public Uri insert(Uri uri, ContentValues values)
-```
+```java
 说明：根据该Uri插入values对应的数据
 
-```
+```java
 public int delete(Uri uri, String selection, String[] selectionArgs)
 ```
 说明：根据Uri，删除selection条件匹配全部记录。
 
-```
+```java
 public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)
 ```
 说明：根据Uri，更新selection条件匹配的记录。
@@ -121,12 +118,12 @@ A应用调用ContentResolver的query方法，其实是调用了B应用Uri对应�
 # 五 UriMatcher类
 该类主要是是对传入的 Uri 进行匹配，确保传来的 Url 对 ContentProvider 确实可以处理的。该类主要提供了如下两个方法：
 
-```
+```java
 public void  addURI(String authority, String path, int code)
 ```
 说明：该方法用于向UriMatcher注册Uri，其中参数authority与path组成一个Uri，参数code 是该Uri对应的标识码
 例如：
-```
+```java
 /**标识码*/
 public static final int CODE_ID_1 = 1;
 public static final int CODE_ID_2 = 2;
@@ -160,7 +157,8 @@ public static long parseId(Uri uri)   用于从指定的Uri中解析出所包含
 
             例如上述newUri解析出来的ID为2。
 # 七  示例
-1 访问系统短信
+## 1 访问系统短信
+```java
         //读取系统短信
          Uri uri=Uri.parse( "content://sms/inbox" );
          Cursor cursor=getContentResolver().query(uri,  new  String[]{ "address" , "body" },  null ,  null ,  null );
@@ -177,15 +175,18 @@ public static long parseId(Uri uri)   用于从指定的Uri中解析出所包含
          values.put( "person" ,  "招商银行" ); 
          values.put( "read" ,  0 );
          resolver.insert(uri, values);
+```
 说明：需要如下权限：
+
+```java
 <uses-permission android:name="android.permission.READ_SMS"/>
 
 <uses-permission android:name="android.permission.WRITE_SMS"/>
-
- 2 访问手机联系人
+```
+ ## 2 访问手机联系人
 
 Android系统提供了Contacts应用程序来管理联系人，而且还为联系人提供了ContentProvider，所以其他应用程序也可以来管理联系人。
-
+```java
 Uri uri1 = Uri.parse( "content://com.android.contacts/raw_contacts" );
 Uri uri2 = Uri.parse( "content://com.android.contacts/data/phones" );
 ContentResolver resolver = getContentResolver();
@@ -200,4 +201,5 @@ while (cursor.moveToNext()){
                Log.e( "联系人..." , data1);
        }
 }
+```
 说明： 管理模拟器手机通讯录数据库在data->data->com.android.contact。
