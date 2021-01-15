@@ -24,9 +24,9 @@ Google搜索笔记
 ```
 
 说明：
-属性authorities是Uri标识，ContentProvide就是以这个Uri的形式对外提供数据，ContentResolve也是根据该Uri进行访问操作该应用的数据的，可以理解为网站的域名；
-属性exported指定是否对外暴露数据，只有为true时，其他应用才可以访问该应用的数据；
-属性name指定ContentProvide实现类的类名；
+　　属性authorities是Uri标识，ContentProvide就是以这个Uri的形式对外提供数据，ContentResolve也是根据该Uri进行访问操作该应用的数据的，可以理解为网站的域名；
+　　属性exported指定是否对外暴露数据，只有为true时，其他应用才可以访问该应用的数据；
+　　属性name指定ContentProvide实现类的类名；
 ### （3）注册成功后就是实现ContentProvide的抽象方法，其实就是实现对数据的CRUD（create，retrieve，update，delete）操作方法；方法如下：
 ```java
 public boolean onCreate()
@@ -52,22 +52,31 @@ public int delete(Uri uri, String selection, String[] selectionArgs)
 public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)
 ```
 说明：根据Uri，更新selection条件匹配的记录。
+
 # 三 Uri类
-　　在介绍Android的Uri之前我们先看一个网站的Uri如下：
-　　　<center> https://www.oracle.com/index.html </center> 
+
+在介绍Android的Uri之前我们先看一个网站的Uri如下：
+　　https://www.oracle.com/index.html
+
 其规则分为三部分如下：
-https：协议部分，通过https协议来访问该网站，这个是固定的；
-www.oracle.com：域名部分，要访问指定网站，这个也是固定的；
-index.html：网络资源部分，访问者可以访问不同的资源，这个是动态的；
+* https：协议部分，通过https协议来访问该网站，这个是固定的；
+* www.oracle.com：域名部分，要访问指定网站，这个也是固定的；
+* index.html：网络资源部分，访问者可以访问不同的资源，这个是动态的；
+
 而ContentProvide的Uri与此类似，例如上述注册的ContentProvide，要访问该应用的数据的Uri可以是这样的：
+```
 content://com.lzb.provide.myContentProvide/students
+```
+
 其规则分为三部分如下：
-content://：协议部分，表示ContentProvider使用的协议，这个是固定的；
-com.lzb.provide.myContentProvide：URI 的标识，也是属性authorities定义的部分，系统就是通过这个部分找到要操作那个ContentProvide，
-这个也是固定的。为了保证URI标识的唯一性，它一般是一个完整的、小写的类名（包.小写的类名）；
-students：资源部分（资源所在的路径），访问者可以访问不同的资源，这个是动态的；如果想要访问具体那行数据，可以在后面加上该行的ID，例如上述要该路径下的第1条记录，那么Uri可以写为content://com.lzb.provide.myContentProvide/students/1
-【知识扩展】
-我们知道网站的Uri都有个默认的端口8080，其实我也可以给ContentProvider添加端口，其规则如下：
+* content://：协议部分，表示ContentProvider使用的协议，这个是固定的；
+* com.lzb.provide.myContentProvide：URI 的标识，也是属性authorities定义的部分，系统就是通过这个部分找到要操作那个ContentProvide，这个也是固定的。为了保证URI标识的唯一性，它一般是一个完整的、小写的类名（包.小写的类名）；
+* students：资源部分（资源所在的路径），访问者可以访问不同的资源，这个是动态的；如果想要访问具体那行数据，可以在后面加上该行的ID，例如上述要该路径下的第1条记录，那么Uri可以写为
+```
+content://com.lzb.provide.myContentProvide/students/1
+```
+## 【知识扩展】
+网站的Uri都有个默认的端口8080，其实我也可以给ContentProvider添加端口，其规则如下：
     content://com.example.project:200/folder/subfolder/etc
     \---------/ \---------------------------/ \---/\--------------------------/
     scheme                 host               port        path
@@ -75,19 +84,34 @@ students：资源部分（资源所在的路径），访问者可以访问不同
                               authority   
 
 但是要注意在注册ContentProvide、访问ContentProvide时也要添加上该端口号，例如加上端口号200时，访问该ContentProvide的Uri如下：
+```
 content://com.lzb.provide.myContentProvide:200/students
+```
+
 # 四  ContentResolver类
-        通过调用Content的 getContentResolver() 方法获取 ContentResolver对象实例，其实ContentResolver的作用类似于HttpClient，获取对象后就可以根据Uri对应用的数据进行CRUD操作了。ContentResolver有如下方法：
+通过调用Content的 getContentResolver() 方法获取 ContentResolver对象实例，其实ContentResolver的作用类似于HttpClient，获取对象后就可以根据Uri对应用的数据进行CRUD操作了。ContentResolver有如下方法：
+```
 public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
+```
 说明：根据Uri查询出select条件所匹配的全部记录，projection表示一个列名列表，表明只选择指定的数据列
+
+```
 public Uri insert(Uri uri, ContentValues values)
+```
 说明：根据该Uri插入values对应的数据
+
+```
 public int delete(Uri uri, String selection, String[] selectionArgs)
+```
 说明：根据Uri，删除selection条件匹配全部记录。
+
+```
 public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)
+```
 说明：根据Uri，更新selection条件匹配的记录。
-【知识扩展】
+## 【知识扩展】
 那么ContentProvider、Uri、ContentResolver之间的关系是如何的呢？如下关系图：
+![avatar](https://img-blog.csdn.net/20171021143953945?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHUxMDI0MTg4MzE1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
 
 说明：从上图可以看出通过Uri标识，ContentProvider间接调用了ContentResolver的CRUD方法。
 A应用调用ContentResolver的insert方法，其实是调用了B应用Uri对应的ContentProvider的insert方法；
@@ -95,10 +119,14 @@ A应用调用ContentResolver的update方法，其实是调用了B应用Uri对应
 A应用调用ContentResolver的delete方法，其实是调用了B应用Uri对应的ContentProvider的delete方法；
 A应用调用ContentResolver的query方法，其实是调用了B应用Uri对应的ContentProvider的query方法；
 # 五 UriMatcher类
-      该类主要是是对传入的 Uri 进行匹配，确保传来的 Url 对 ContentProvider 确实可以处理的。该类主要提供了如下两个方法：
+该类主要是是对传入的 Uri 进行匹配，确保传来的 Url 对 ContentProvider 确实可以处理的。该类主要提供了如下两个方法：
+
+```
 public void  addURI(String authority, String path, int code)
+```
 说明：该方法用于向UriMatcher注册Uri，其中参数authority与path组成一个Uri，参数code 是该Uri对应的标识码
 例如：
+```
 /**标识码*/
 public static final int CODE_ID_1 = 1;
 public static final int CODE_ID_2 = 2;
@@ -113,12 +141,15 @@ static {
     uriMatcher.addURI(HOST,PATH + "/#",CODE_ID_2);
 }
 public int  match(Uri uri)     
+```
 说明：根据前面注册的Uri返回其对应的标识码，如果在UriMatcher中找不到对应的Uri则返回-1。
-例如上述示例注册了content://com.lzb.provide.myContentProvide:200/students 与content://com.lzb.provide.myContentProvide:200/students/#。
-那么 若Uri为content://com.lzb.provide.myContentProvide:200/student返回1，若Uri为content://com.lzb.provide.myContentProvide:200/students/1(或者2,3,4.....)返回2，否则的话返回-1。
+例如上述示例注册了<p>content://com.lzb.provide.myContentProvide:200/students </p>与<p>content://com.lzb.provide.myContentProvide:200/students/# </p>。
+那么 若Uri为<p>content://com.lzb.provide.myContentProvide:200/student</p>返回1，若Uri为<p>content://com.lzb.provide.myContentProvide:200/students/1(或者2,3,4.....)</p>返回2，否则的话返回-1。
 # 六  ContentUris类
-    这个类是一个操作 Uri 字符串的工具类，主要是拼接 Uri 字符串用，它有两个方法：
+这个类是一个操作 Uri 字符串的工具类，主要是拼接 Uri 字符串用，它有两个方法：
+```
 public static  Uri withAppendedId(Uri uri, long  id)   用于为路径加上id部分
+```
 例如：Uri  uri = Uri.parse("content://com.lzb.provide.myContentProvide:200/students");
 
 Uri newUri = ContentUris.withAppendedId(uri,2);
