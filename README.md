@@ -140,8 +140,8 @@ static {
 public int  match(Uri uri)     
 ```
 说明：根据前面注册的Uri返回其对应的标识码，如果在UriMatcher中找不到对应的Uri则返回-1。
-例如上述示例注册了<p>content://com.lzb.provide.myContentProvide:200/students </p>与<p>content://com.lzb.provide.myContentProvide:200/students/# </p>。
-那么 若Uri为<p>content://com.lzb.provide.myContentProvide:200/student</p>返回1，若Uri为<p>content://com.lzb.provide.myContentProvide:200/students/1(或者2,3,4.....)</p>返回2，否则的话返回-1。
+例如上述示例注册了content://com.lzb.provide.myContentProvide:200/students与content://com.lzb.provide.myContentProvide:200/students/# 。
+那么 若Uri为content://com.lzb.provide.myContentProvide:200/student返回1，若Uri为content://com.lzb.provide.myContentProvide:200/students/1(或者2,3,4.....)返回2，否则的话返回-1。
 # 六  ContentUris类
 这个类是一个操作 Uri 字符串的工具类，主要是拼接 Uri 字符串用，它有两个方法：
 ```
